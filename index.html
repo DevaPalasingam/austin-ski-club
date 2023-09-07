@@ -16,27 +16,62 @@
   </head>
   <body>
     <div
-      x-data="{ isVisible: window.innerWidth >= 768 }"
-      x-on:resize.window="isVisible = window.innerWidth >= 768"
+      x-data="{ isLarge: window.innerWidth >= 895, mobileShow: false, navCover: false }"
+      x-on:resize.window="isLarge = window.innerWidth >= 895"
       style="padding: 0 2rem; background-color: var(--skiDarkGreen)"
+      x-bind:id="navCover ? 'navCover' : ''"
     >
-      <nav x-show="isVisible">
-        <ul>
-          <li style="color: var(--primary)"><strong>Brand</strong></li>
-        </ul>
-        <ul>
-          <li><a href="#">WHAT WE THINK</a></li>
-          <li><a href="#">WHAT WE DO</a></li>
-          <li><a href="#">WHO WE ARE</a></li>
+      <nav>
+        <a href="/">
+          <ul>
+            <li>
+              <img
+                src="/assets/desert.png"
+                alt="Desert"
+                style="width: 2.6rem"
+              />
+            </li>
+            <li
+              style="
+                color: var(--primary);
+                width: 6rem;
+                font-family: 'Courier New', Courier, monospace;
+                font-style: normal;
+              "
+            >
+              Austin Ski Club
+            </li>
+          </ul>
+        </a>
+        <ul style="font-family: monospace" x-show="isLarge && !mobileShow">
+          <li style="margin-right: 2rem"><a href="#">WHAT WE THINK</a></li>
+          <li style="margin-right: 2rem"><a href="#">WHAT WE DO</a></li>
+          <li style="margin-right: 2rem"><a href="#">WHO WE ARE</a></li>
           <li><a href="#">CONTACT</a></li>
         </ul>
+        <ul
+          x-show="!isLarge && !mobileShow"
+          x-on:click="mobileShow = true; navCover = true"
+        >
+          <img
+            src="/assets/hamburger.png"
+            alt="Hamburger"
+            style="width: 3rem"
+          />
+        </ul>
+        <ul
+          x-show="!isLarge && mobileShow"
+          x-on:click="mobileShow = false; navCover = false"
+        >
+          <img src="/assets/letter-x.png" alt="Close" style="width: 3rem" />
+        </ul>
       </nav>
-      <aside x-show="!isVisible">
+      <aside x-show="mobileShow">
         <nav>
-          <ul>
-            <li><a href="#">WHAT WE THINK</a></li>
+          <ul style="font-family: monospace; font-size: xxx-large">
+            <li style="margin: 5% 0"><a href="#">WHAT WE THINK</a></li>
             <li><a href="#">WHAT WE DO</a></li>
-            <li><a href="#">WHO WE ARE</a></li>
+            <li style="margin: 5% 0"><a href="#">WHO WE ARE</a></li>
             <li><a href="#">CONTACT</a></li>
           </ul>
         </nav>
